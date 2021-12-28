@@ -1,0 +1,107 @@
+﻿@model WebApplication1.Models.Blogs.BlogModel
+
+<!-- Preloader -->
+<div class="preloader"></div>
+
+<section class="page-banner">
+    <div class="hero-circle-shape">
+        <img src="/assets/images/shape/hero-circle-shape.png" alt="Hero Circle Shape">
+    </div>
+    <div class="hero-moon-shape">
+        <img src="/assets/images/shape/hero-moon-shape.png" alt="Hero Moon Shape">
+    </div>
+    <div class="hero-right-shape">
+        <img src="/assets/images/shape/hero-right-shape.png" alt="Hero Right Shape">
+    </div>
+    <div class="container">
+        <div class="banner-inner">
+            <h2>@Model.Name</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Blogs" asp-area="">Blog</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@Model.Group.Name</li>
+                    </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+<!-- END Page Banner -->
+<!-- START Blog Details -->
+<section class="blog-details pb-120 rpb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Blog Details Content -->
+                <div class="blog-details-content">
+                    <div class="details-image">
+                        <img src="/assets/images/blog/blog-details.jpg" alt="Blog Details Image">
+                    </div>
+                    <h4>@Model.Name</h4>
+                    <ul class="title-description">
+                        <li>@Model.Group.Name</li>
+                        <li>0 Comments</li>
+                        <li>@Model.CreateDate</li>
+                    </ul>
+                    <p>@Model.Description</p>
+
+                    <div class="comment-form">
+                        <h5>Leave a Reply</h5>
+                        <form action="#">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control custom-input" id="name" name="name" value="" placeholder="Your Name" required="">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control custom-input" id="email" name="email" value="" placeholder="Your Email" required="">
+                                </div>
+                                <div class="col-12">
+                                    <input type="text" class="form-control custom-input" id="subject" name="subject" value="" placeholder="Your Subject">
+                                </div>
+                                <div class="col-12">
+                                    <textarea class="form-control custom-textarea" id="message:" name="message:" rows="8" placeholder="Message" required=""></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="theme-btn submit-btn">Message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Blog Sidebar -->
+                <div class="blog-sidebar">
+                    <div class="sidebar-widget search-widget">
+                        <h5 class="sidebar-title">Search Course</h5>
+                        <form method="post" action="#">
+                            <input type="search" name="search-field" value="" placeholder="Your Search" required="">
+                            <button type="submit"><i class="flaticon-search"></i></button>
+                        </form>
+                    </div>
+                    <div class="sidebar-widget catagory-widget">
+                        <h5 class="sidebar-title">Catagory</h5>
+                        <div class="catagoris">
+                            <ul class="list-style-one">
+                                <li>
+                                    <a href="#">Web Development<span>(25)</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">Graphic Design <span>(11)</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">Php Programming <span>(17)</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">React Js Learning <span>(23)</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">Web Design <span>(20)</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

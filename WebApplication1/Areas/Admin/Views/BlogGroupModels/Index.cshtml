@@ -1,0 +1,92 @@
+﻿@using WebApplication1.Data.Contexts
+@using Microsoft.EntityFrameworkCore
+@model IEnumerable<WebApplication1.Models.Blogs.BlogGroupModel>
+@inject BlogContext _context
+
+@{
+    ViewData["Title"] = "Blog";
+}
+
+<div class="container mt-5">
+    <div class="row tm-content-row">
+        <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
+            <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
+                <div class="tm-product-table-container">
+                    <table class="table table-hover tm-table-small tm-product-table">
+                        <thead>
+                        <tr>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.UniqeUrl)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.CreateDate)
+                            </th>
+                            <th scope="col">
+
+                            </th>
+                            <th scope="col">
+
+                            </th>
+                            <th scope="col">&nbsp;</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in _context.Blogs.Include(b => b.Group).ToList())
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelitem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelitem => item.UniqeUrl)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelitem=>item.Group.Name)
+                                    </td>
+                                    <td>
+                                        <a class="text-body" asp-action="Edit" asp-controller="BlogModels" asp-route-id="@item.Id">Edit</a> /
+                                        <a asp-action="Details" asp-controller="BlogModels" asp-route-id="@item.Id">Details</a> /
+                                        <a class="text-danger" asp-controller="BlogModels" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- table container -->
+                <a asp-action="Create" asp-controller="BlogModels" asp-area="Admin"
+                   class="btn btn-primary btn-block text-uppercase mb-3">Add new Blog</a>
+                </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 tm-block-col">
+            <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
+                <h2 class="tm-block-title">Product Categories</h2>
+                <div class="tm-product-table-container">
+                    <table class="table tm-table-small tm-product-table">
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th class="col-sm-10">
+                                        @Html.DisplayFor(modelitem => item.Name)
+                                    </th>
+                                    <td>
+                                        <a class="text-body" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                        <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- table container -->
+                <a asp-action="Create" asp-controller="BlogGroupModels" asp-area="Admin"
+                   class="btn btn-primary btn-block text-uppercase mb-3">Add new Blog</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+﻿@model WebApplication1.Models.Blogs.BlogModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container tm-mt-big tm-mb-big">
+    <div class="row">
+        <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+            <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="tm-block-title d-inline-block">Add Product</h2>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <form action="" method="post">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-12">
+                                    <div class="form-group mb-3">
+                                        <label asp-for="Name" class="control-label"></label>
+                                        <input asp-for="Name" class="form-control" />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label asp-for="ShortDescription" class="control-label"></label>
+                                        <input asp-for="ShortDescription" class="form-control" />
+                                        <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label asp-for="Description" class="control-label"></label>
+                                        <textarea asp-for="Description" class="form-control"></textarea>
+                                    </div>
+                                    </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12">
+                                    <div class="form-group mb-3">
+                                        <label asp-for="UniqeUrl" class="control-label"></label>
+                                        <input asp-for="UniqeUrl" class="form-control" />
+                                        <span asp-validation-for="UniqeUrl" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label asp-for="GroupId" class="control-label"></label>
+                                        <select asp-for="GroupId" class="custom-select" asp-items="ViewBag.GroupId">
+                                            <option selected>Select category</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label >Image Blog</label>
+                                        <div class="tm-product-img-dummy">
+                                            <i class="fas fa-cloud-upload-alt tm-upload-icon"
+                                               onclick="document.getElementById('fileInput').click();"></i>
+                                        </div>
+                                        <div class="custom-file mt-3 mb-3">
+                                            <input id="fileInput" type="file" style="display: none;" />
+                                            <input type="button"
+                                                   class="btn btn-primary btn-block mx-auto"
+                                                   value="UPLOAD PRODUCT IMAGE"
+                                                   onclick="document.getElementById('fileInput').click();" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <input type="submit" value="Create" class="btn btn-primary btn-block text-uppercase" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

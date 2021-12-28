@@ -1,0 +1,27 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Product Admin - Dashboard HTML Template</title>
+    <partial name="_LayoutStyleAdminPartial" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body id="reportsPage">
+    <div class="" id="home">
+        <partial name="_LayouatHeaderAdminPartial" />
+        <main>
+            @RenderBody()
+        </main>
+        <partial name="_LayouatFooterAdminPartial" />
+    </div>
+
+    <partial name="_LayoutScriptAdminPartial" />
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>
