@@ -14,9 +14,22 @@ namespace WebApplication1.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
-        {
-            return View(_context.Blogs.Include(b => b.Group));
+        [Route("blog/{groupUrl?}")]
+        public IActionResult Index(string groupUrl = "")
+         {
+            if (string.IsNullOrWhiteSpace(groupUrl))
+            {
+                ViewBag.GroupName = "Archive";
+                return View(_context.Blogs.Include(b => b.Group));
+            }
+
+            var group = this._context.BlogGroups.SingleOrDefault(g => g.UniqeUrl == groupUrl);
+            if (group == null)
+                return NotFound();
+
+            ViewBag.GroupName = group.Name;
+            return View(_context.Blogs.Where(b => b.Group.UniqeUrl == groupUrl)
+                 .Include(b => b.Group));
         }
 
         [Route("blog/{groupUrl}/{blogUrl}")]

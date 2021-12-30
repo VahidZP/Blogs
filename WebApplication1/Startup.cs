@@ -6,6 +6,9 @@ using Microsoft.Extensions.Hosting;
 
 namespace WebApplication1
 {
+    using System;
+
+    using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.EntityFrameworkCore;
 
     using WebApplication1.Data.Contexts;
@@ -26,11 +29,29 @@ namespace WebApplication1
                 op.UseSqlServer(Configuration.GetConnectionString("BlogConnection"));
             });
 
+            services.AddAuthentication(
+                option =>
+                    {
+                        option.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                        option.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                        option.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                        option.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    }).AddCookie(
+                option =>
+                    {
+                        option.LoginPath = "/login";
+                        option.LogoutPath = "/logout";
+                        option.SlidingExpiration = true;
+                        option.ExpireTimeSpan = TimeSpan.FromDays(20);
+                    });
+  
+
             services.AddControllersWithViews();
             services.AddRouting(
                 options =>
                     {
                         options.LowercaseUrls = true;
+                        options.LowercaseQueryStrings = true;
                     });
         }
 
@@ -51,6 +72,7 @@ namespace WebApplication1
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -8,10 +8,8 @@ namespace WebApplication1.Models.Users
 {
     public class UserModel : BaseEntity
     {
-        [Required]
         [MaxLength(150)]
         public string UserName { get; set; }
-        [Required]
         [MaxLength(200)]
         public string Email { get; set; }
         [Required]

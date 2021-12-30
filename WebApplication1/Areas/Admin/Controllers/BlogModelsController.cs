@@ -64,7 +64,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                 blogModel.CreateDate= DateTime.Now.ToString("d");
                 _context.Add(blogModel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Redirect("/blogGroup/");
             }
             ViewData["GroupId"] = new SelectList(_context.BlogGroups, "Id", "Name", blogModel.GroupId);
             return View(blogModel);

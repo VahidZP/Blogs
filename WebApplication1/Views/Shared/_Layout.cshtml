@@ -17,7 +17,8 @@
         <div class="preloader"></div>
 
         <!-- START Main Header -->
-        <partial name="_LayoutHeaderPartial" />
+        @*<partial name="_LayoutHeaderPartial" />*@
+        @await Component.InvokeAsync("LayoutHeader")
         <!-- END Main Header -->
 
         @RenderBody()

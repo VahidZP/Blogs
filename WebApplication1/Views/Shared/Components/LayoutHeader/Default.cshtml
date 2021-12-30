@@ -1,0 +1,56 @@
+﻿@model System.Collections.Generic.List<WebApplication1.Models.Blogs.BlogGroupModel>
+
+    <header class="main-header">
+
+        <!-- Header-Upper -->
+        <div class="header-upper">
+            <div class="container clearfix">
+
+                <div class="header-inner d-lg-flex align-items-center ">
+
+                    <div class="logo-outer d-flex align-items-center">
+                        <div class="logo"><a href="/"><img src="/assets/images/logo.png" alt="Logo"></a></div>
+                    </div>
+
+                    <div class="nav-outer clearfix ml-lg-auto">
+                        <!-- Main Menu -->
+                        <nav class="main-menu navbar-expand-lg">
+                            <div class="navbar-header clearfix">
+                                <!-- Toggle Button -->
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
+
+                            <div class="navbar-collapse collapse clearfix">
+                                <ul class="navigation clearfix">
+                                    <li class="current-menu-item"><a href="/">Home</a></li>
+
+                                    <li class="dropdown">
+                                        <a>Blogs</a>
+                                        <ul>
+                                            <li><a asp-action="Index" asp-controller="Blogs" asp-area="" asp-route-groupUrl="">Archive</a></li>
+                                            @foreach (var item in Model)
+                                            {
+                                            <li><a asp-action="Index" asp-controller="Blogs" asp-area="" asp-route-groupUrl="@item.UniqeUrl">@item.Name</a></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                    <li><a>Contact</a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                        <!-- Main Menu END -->
+                    </div>
+
+                    <div class="menu-btn">
+                        <a asp-action="Index" asp-controller="Home" asp-area="Admin" class="theme-btn">Login</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- END Header Upper -->
+    </header>
