@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1.Controllers
 {
+    using WebApplication1.Extensions;
+    
     public class BlogsController : Controller
     {
         private readonly BlogContext _context;
@@ -16,7 +18,7 @@ namespace WebApplication1.Controllers
 
         [Route("blog/{groupUrl?}")]
         public IActionResult Index(string groupUrl = "")
-         {
+        {
             if (string.IsNullOrWhiteSpace(groupUrl))
             {
                 ViewBag.GroupName = "Archive";
@@ -36,12 +38,14 @@ namespace WebApplication1.Controllers
         public IActionResult Show(string groupUrl, string blogUrl)
         {
             var blog = _context.Blogs
-                .Include(b => b.Group)
+                .Include(c => c.Group)
+                .Include(c => c.User)
+                .Include(c => c.BlogComments)
                 .SingleOrDefault(b => b.UniqeUrl == blogUrl);
             if (blog == null)
                 return NotFound();
 
-            return View(blog);
+            return View(blog.ToShowViewModel());
         }
     }
 }
