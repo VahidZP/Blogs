@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using WebApplication1.Models.Blogs;
 
 namespace WebApplication1.Models.Users
 {
@@ -18,5 +16,11 @@ namespace WebApplication1.Models.Users
         [Required]
         [MaxLength(50)]
         public string PassWord { get; set; }
+
+        #region Relations
+
+        public ICollection<BlogModel> Blogs { get; set; }
+
+        #endregion
     }
 }

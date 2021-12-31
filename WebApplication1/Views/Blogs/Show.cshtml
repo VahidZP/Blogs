@@ -1,4 +1,4 @@
-﻿@model WebApplication1.Models.Blogs.BlogModel
+﻿@model WebApplication1.ViewModels.Blog.BlogShowViewModel
 
 @{
     ViewBag.Title = @Model.Name;
@@ -22,8 +22,8 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Blogs" asp-area="" asp-route-groupUrl="">Blog</a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><a asp-action="Index" asp-controller="Blogs" asp-area="" asp-route-groupUrl="@Model.Group.UniqeUrl">@Model.Group.Name</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">@Model.Group.Name</li>
+                    <li class="breadcrumb-item active" aria-current="page"><a asp-action="Index" asp-controller="Blogs" asp-area="" asp-route-groupUrl="@Model.GroupUniqeUrl">@Model.GroupName</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@Model.GroupName</li>
                 </ol>
             </nav>
         </div>
@@ -38,12 +38,12 @@
                 <!-- Blog Details Content -->
                 <div class="blog-details-content">
                     <div class="details-image">
-                        <img src="/assets/images/blog/blog-details.jpg" alt="Blog Details Image">
-                    </div>
+                        <img src="@Model.ImageFullPath" class="image" alt="@Model.Name"/>
+                        </div>
                     <h4>@Model.Name</h4>
                     <ul class="title-description">
-                        <li>@Model.Group.Name</li>
-                        <li>0 Comments</li>
+                        <li>By @Model.UserName</li>
+                        <li>@Model.Comments Comments</li>
                         <li>@Model.CreateDate</li>
                     </ul>
                     <p>@Model.Description</p>

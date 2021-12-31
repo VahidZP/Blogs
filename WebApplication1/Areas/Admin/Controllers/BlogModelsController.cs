@@ -10,6 +10,13 @@ using WebApplication1.Models.Blogs;
 
 namespace WebApplication1.Areas.Admin.Controllers
 {
+    using System.IO;
+    using System.Security.Claims;
+
+    using WebApplication1.Areas.Admin.Models.Blogs;
+    using WebApplication1.Extensions;
+    using WebApplication1.Values;
+
     public class BlogModelsController : AdminController
     {
         private readonly BlogContext _context;
@@ -22,7 +29,9 @@ namespace WebApplication1.Areas.Admin.Controllers
         // GET: Admin/BlogModels
         public async Task<IActionResult> Index()
         {
-            var blogContext = _context.Blogs.Include(b => b.Group);
+            var blogContext = _context.Blogs
+                .Where(c => c.UserId == HttpContext.User.GetUserId())
+                .Include(b => b.Group);
             return View(await blogContext.ToListAsync());
         }
 
@@ -57,17 +66,54 @@ namespace WebApplication1.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,UniqeUrl,ShortDescription,Description,GroupId,Id,CreateDate")] BlogModel blogModel)
+        public async Task<IActionResult> Create(BlogCreateOrEditeModel blogViewModels)
         {
             if (ModelState.IsValid)
             {
-                blogModel.CreateDate= DateTime.Now.ToString("d");
-                _context.Add(blogModel);
+                string ImageName = null;
+
+                if (blogViewModels.ImageFile.Length > 0)
+                {
+                    var path = PathTools.BlogPathServer;
+                    var fileName = Guid.NewGuid().ToString("N")
+                                   + Path.GetExtension(blogViewModels.ImageFile.FileName);
+                    var fullPath = Path.Combine(path, fileName);
+
+                    if (!Directory.Exists(path))
+                        Directory.CreateDirectory(path);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        await blogViewModels.ImageFile.CopyToAsync(stream);
+                    }
+
+                    ImageName = fileName;
+
+                    if (!Directory.Exists(path))
+                        Directory.CreateDirectory(path);
+                }
+
+                var blogModels = new BlogModel()
+                {
+                    CreateDate = DateTime.Now.ToString("d"),
+                    UserId = Convert.ToInt32(this.HttpContext.User.GetClaim(ClaimTypes.NameIdentifier)),
+                    GroupId = blogViewModels.GroupId,
+                    Name = blogViewModels.Name,
+                    ShortDescription = blogViewModels.ShortDescription,
+                    UniqeUrl = blogViewModels.UniqeUrl,
+                    Description = blogViewModels.Description,
+                    ImageName = ImageName,
+                };
+
+
+
+                _context.Blogs.Add(blogModels);
                 await _context.SaveChangesAsync();
-                return Redirect("/blogGroup/");
+                var returnUrl = "/admin/bloggroupmodels/";
+                return Redirect(returnUrl);
             }
-            ViewData["GroupId"] = new SelectList(_context.BlogGroups, "Id", "Name", blogModel.GroupId);
-            return View(blogModel);
+
+            ViewData["GroupId"] = new SelectList(_context.BlogGroups, "Id", "Name", blogViewModels.GroupId);
+            return View(blogViewModels);
         }
 
         // GET: Admin/BlogModels/Edit/5
@@ -78,7 +124,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var blogModel = await _context.Blogs.FindAsync(id);
+            var blogModel = await _context.Blogs.SingleOrDefaultAsync(c => c.UserId == HttpContext.User.GetUserId() && c.Id == id);
             if (blogModel == null)
             {
                 return NotFound();
@@ -117,7 +163,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Redirect("/admin/bloggroupmodels/");
             }
             ViewData["GroupId"] = new SelectList(_context.BlogGroups, "Id", "Name", blogModel.GroupId);
             return View(blogModel);
@@ -150,7 +196,7 @@ namespace WebApplication1.Areas.Admin.Controllers
             var blogModel = await _context.Blogs.FindAsync(id);
             _context.Blogs.Remove(blogModel);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Redirect("/admin/bloggroupmodels/");
         }
 
         private bool BlogModelExists(int id)

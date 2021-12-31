@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<WebApplication1.Models.Blogs.BlogModel>
 
-
-
 <div class="page-wrapper">
 
     <!-- Preloader -->
@@ -28,7 +26,7 @@
                     </ol>
                 </nav>
             </div>
-        </div>
+        </div>  
     </section>
     <!-- END Page Banner -->
     <!-- START Blog Section -->
@@ -37,25 +35,36 @@
             <div class="row">
                 @foreach (var item in Model.ToList())
                 {
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-4 col-md-6 ">
                         <div class="blog-item">
-                            <div class="blog-image">
-                                <img src="/assets/images/blog/blog1.jpg" alt="Blog Image">
-                            </div>
-                            <div class="blog-content">
-                                <h5><a asp-action="Show" asp-controller="Blogs" asp-area="" 
-                                       asp-route-blogUrl="@item.UniqeUrl"
-                                    asp-route-groupUrl="@item.Group.UniqeUrl"
-                                       >@item.Name</a></h5>
-                                <ul class="title-description">
-                                    <li><a asp-action="Index" asp-controller="Blogs" asp-area="" 
-                                           asp-route-groupUrl="@item.Group.UniqeUrl">@item.Group.Name</a></li>
-                                    <li>@item.CreateDate</li>
-                                </ul>
-                                <p>@item.ShortDescription</p>
+                                <div class="blog-image">
+                                    @if (!string.IsNullOrWhiteSpace(item.ImageName))
+                                    {
+                                        <img src="/upload/blog/@item.ImageName" width="400" height="200" alt="Blog Image">
+                                    }
+                                    else
+                                    {
+                                        <img src="/assets/images/blog/blog1.jpg" alt="Blog Image">
+                                    }
+                                </div>
+                                <div class="blog-content">
+                                    <h5>
+                                        <a asp-action="Show" asp-controller="Blogs" asp-area=""
+                                           asp-route-blogUrl="@item.UniqeUrl"
+                                           asp-route-groupUrl="@item.Group.UniqeUrl">@item.Name</a></h5>
+                                    <ul class="title-description">
+                                        <li>
+                                            <a asp-action="Index" asp-controller="Blogs" asp-area=""
+                                               asp-route-groupUrl="@item.Group.UniqeUrl">@item.Group.Name</a>
+                                        </li>
+                                        <li>@item.CreateDate</li>
+                                    </ul>
+                                    <p style="height: 35px; text-overflow: ellipsis; overflow: hidden; overflow-wrap: normal;">
+                                        @item.ShortDescription
+                                    </p>
+                                    </div>
                             </div>
                         </div>
-                    </div>
                 }
             </div>
         </div>

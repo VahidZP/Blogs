@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using WebApplication1.Models.Users;
 
 namespace WebApplication1.Models.Blogs
 {
@@ -16,10 +18,17 @@ namespace WebApplication1.Models.Blogs
         [Required]
         public string Description { get; set; }
 
+        public string ImageName { get; set; }
+
         #region Relations
+
+        public int UserId { get; set; }
+        public UserModel User { get; set; }
 
         public int GroupId { get; set; }
         public BlogGroupModel Group { get; set; }
+
+        public ICollection<BlogCommentModel> BlogComments { get; set; }
 
         #endregion
     }

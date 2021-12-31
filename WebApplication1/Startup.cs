@@ -44,7 +44,7 @@ namespace WebApplication1
                         option.SlidingExpiration = true;
                         option.ExpireTimeSpan = TimeSpan.FromDays(20);
                     });
-  
+
 
             services.AddControllersWithViews();
             services.AddRouting(
