@@ -11,18 +11,18 @@ namespace WebApplication1.Areas.Admin.Controllers
     
     public class BlogGroupModelsController : AdminController
     {
-        private readonly BlogContext _context;
+        private readonly BlogContext context;
 
         public BlogGroupModelsController(BlogContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         // GET: Admin/BlogGroupModels
         
         public async Task<IActionResult> Index()
         {
-            return View(await _context.BlogGroups.ToListAsync());
+            return View(await this.context.BlogGroups.ToListAsync());
         }
 
         // GET: Admin/BlogGroupModels/Details/5
@@ -34,7 +34,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var blogGroupModel = await _context.BlogGroups
+            var blogGroupModel = await this.context.BlogGroups
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (blogGroupModel == null)
             {
@@ -61,8 +61,8 @@ namespace WebApplication1.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 blogGroupModel.CreateDate=DateTime.Now.ToString("d");
-                _context.Add(blogGroupModel);
-                await _context.SaveChangesAsync();
+                this.context.Add(blogGroupModel);
+                await this.context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(blogGroupModel);
@@ -77,7 +77,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var blogGroupModel = await _context.BlogGroups.FindAsync(id);
+            var blogGroupModel = await this.context.BlogGroups.FindAsync(id);
             if (blogGroupModel == null)
             {
                 return NotFound();
@@ -101,8 +101,8 @@ namespace WebApplication1.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(blogGroupModel);
-                    await _context.SaveChangesAsync();
+                    this.context.Update(blogGroupModel);
+                    await this.context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -129,7 +129,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var blogGroupModel = await _context.BlogGroups
+            var blogGroupModel = await this.context.BlogGroups
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (blogGroupModel == null)
             {
@@ -144,15 +144,15 @@ namespace WebApplication1.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var blogGroupModel = await _context.BlogGroups.FindAsync(id);
-            _context.BlogGroups.Remove(blogGroupModel);
-            await _context.SaveChangesAsync();
+            var blogGroupModel = await this.context.BlogGroups.FindAsync(id);
+            this.context.BlogGroups.Remove(blogGroupModel);
+            await this.context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool BlogGroupModelExists(int id)
         {
-            return _context.BlogGroups.Any(e => e.Id == id);
+            return this.context.BlogGroups.Any(e => e.Id == id);
         }
     }
 }

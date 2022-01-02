@@ -9,11 +9,11 @@ namespace WebApplication1.Controllers
     
     public class BlogsController : Controller
     {
-        private readonly BlogContext _context;
+        private readonly BlogContext context;
 
         public BlogsController(BlogContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         [Route("blog/{groupUrl?}")]
@@ -22,22 +22,22 @@ namespace WebApplication1.Controllers
             if (string.IsNullOrWhiteSpace(groupUrl))
             {
                 ViewBag.GroupName = "Archive";
-                return View(_context.Blogs.Include(b => b.Group));
+                return View(this.context.Blogs.Include(b => b.Group));
             }
 
-            var group = this._context.BlogGroups.SingleOrDefault(g => g.UniqeUrl == groupUrl);
+            var group = this.context.BlogGroups.SingleOrDefault(g => g.UniqeUrl == groupUrl);
             if (group == null)
                 return NotFound();
 
             ViewBag.GroupName = group.Name;
-            return View(_context.Blogs.Where(b => b.Group.UniqeUrl == groupUrl)
+            return View(this.context.Blogs.Where(b => b.Group.UniqeUrl == groupUrl)
                  .Include(b => b.Group));
         }
 
         [Route("blog/{groupUrl}/{blogUrl}")]
         public IActionResult Show(string groupUrl, string blogUrl)
         {
-            var blog = _context.Blogs
+            var blog = this.context.Blogs
                 .Include(c => c.Group)
                 .Include(c => c.User)
                 .Include(c => c.BlogComments)

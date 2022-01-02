@@ -47,7 +47,7 @@
                                         <img src="/assets/images/blog/blog1.jpg" alt="Blog Image">
                                     }
                                 </div>
-                                <div class="blog-content">
+                                <div class="blog-content long-text">
                                     <h5>
                                         <a asp-action="Show" asp-controller="Blogs" asp-area=""
                                            asp-route-blogUrl="@item.UniqeUrl"
@@ -59,7 +59,7 @@
                                         </li>
                                         <li>@item.CreateDate</li>
                                     </ul>
-                                    <p style="height: 35px; text-overflow: ellipsis; overflow: hidden; overflow-wrap: normal;">
+                                    <p>
                                         @item.ShortDescription
                                     </p>
                                     </div>
