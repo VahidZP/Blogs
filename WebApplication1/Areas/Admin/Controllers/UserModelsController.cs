@@ -10,17 +10,17 @@ namespace WebApplication1.Areas.Admin.Controllers
 {
     public class UserModelsController : AdminController
     {
-        private readonly BlogContext _context;
+        private readonly BlogContext context;
 
         public UserModelsController(BlogContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         // GET: Admin/UserModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users.ToListAsync());
+            return View(await this.context.Users.ToListAsync());
         }
 
         // GET: Admin/UserModels/Details/5
@@ -31,7 +31,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.Users
+            var userModel = await this.context.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (userModel == null)
             {
@@ -57,8 +57,8 @@ namespace WebApplication1.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 userModel.CreateDate= DateTime.Now.ToString("d");
-                _context.Add(userModel);
-                await _context.SaveChangesAsync();
+                this.context.Add(userModel);
+                await this.context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(userModel);
@@ -72,7 +72,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.Users.FindAsync(id);
+            var userModel = await this.context.Users.FindAsync(id);
             if (userModel == null)
             {
                 return NotFound();
@@ -96,8 +96,8 @@ namespace WebApplication1.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(userModel);
-                    await _context.SaveChangesAsync();
+                    this.context.Update(userModel);
+                    await this.context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -123,7 +123,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var userModel = await _context.Users
+            var userModel = await this.context.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (userModel == null)
             {
@@ -138,15 +138,15 @@ namespace WebApplication1.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userModel = await _context.Users.FindAsync(id);
-            _context.Users.Remove(userModel);
-            await _context.SaveChangesAsync();
+            var userModel = await this.context.Users.FindAsync(id);
+            this.context.Users.Remove(userModel);
+            await this.context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UserModelExists(int id)
         {
-            return _context.Users.Any(e => e.Id == id);
+            return this.context.Users.Any(e => e.Id == id);
         }
     }
 }

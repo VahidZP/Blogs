@@ -1,7 +1,7 @@
 ﻿@using WebApplication1.Data.Contexts
 @using Microsoft.EntityFrameworkCore
 @model IEnumerable<WebApplication1.Models.Blogs.BlogGroupModel>
-@inject BlogContext _context
+@inject BlogContext context
 
 @{
     ViewData["Title"] = "Blog";
@@ -36,7 +36,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in _context.Blogs.Include(c => c.User).Include(b => b.Group).ToList())
+                            @foreach (var item in context.Blogs.Include(c => c.User).Include(b => b.Group).ToList())
                             {
                                 <tr>
                                     <td>
@@ -55,9 +55,9 @@
                                         @Html.DisplayFor(modelitem => item.User.FullName)
                                     </td>
                                     <td>
-                                        <a class="text-body" asp-action="Edit" asp-controller="BlogModels" asp-route-id="@item.Id">Edit</a><br/>
-                                        <a asp-action="Details" asp-controller="BlogModels" asp-route-id="@item.Id">Details</a> <br/>
-                                        <a class="text-danger" asp-controller="BlogModels" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                        <a class="badge-primary badge-pill" asp-action="Edit" asp-controller="BlogModels" asp-route-id="@item.Id">Edit</a><br/>
+                                        <a class="badge-warning badge-pill" asp-action="Details" asp-controller="BlogModels" asp-route-id="@item.Id">Details</a> <br/>
+                                        <a class="badge-danger badge-pill" asp-controller="BlogModels" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                                     </td>
                                 </tr>
                             }
@@ -82,9 +82,9 @@
                                         @Html.DisplayFor(c => item.Name)
                                     </th>
                                     <td>
-                                        <a class="text-body" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                                        <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                        <a  class="badge-primary badge-pill" accesskey="" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                                        <a  class="badge-warning badge-pill" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                        <a  class="badge-danger badge-pill"   asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                                     </td>
                                 </tr>
                             }

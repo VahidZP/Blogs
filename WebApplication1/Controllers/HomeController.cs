@@ -15,19 +15,19 @@ namespace WebApplication1.Controllers
 
     public class HomeController : Controller
     {
-        private readonly BlogContext _context;
+        private readonly BlogContext context;
 
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
 
         public HomeController(ILogger<HomeController> logger, BlogContext context)
         {
-            _logger = logger;
-            _context = context;
+            this.logger = logger;
+            this.context = context;
         }
 
         public IActionResult Index()
         {
-            return View(this._context.Blogs.Include(c => c.Group));
+            return View(this.context.Blogs.Include(c => c.Group));
         }
 
         public IActionResult Privacy()

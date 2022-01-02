@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication1.Models.Blogs.BlogModel>
+﻿    @model IEnumerable<WebApplication1.Models.Blogs.BlogModel>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -53,11 +53,12 @@
                                     <img src="/assets/images/blog/blog1.jpg" alt="Blog Image">
                                 }
                             </div>
-                            <div class="blog-content">
-                                <h5><a asp-action="Show" asp-controller="Blogs" asp-area="" 
+                            <div class="blog-content long-text">
+                                <h5>
+                                    <a asp-action="Show" asp-controller="Blogs" asp-area=""
                                        asp-route-blogUrl="@item.UniqeUrl"
-                                       asp-route-groupUrl="@item.Group.UniqeUrl"
-                                    >@item.Name</a></h5>
+                                       asp-route-groupUrl="@item.Group.UniqeUrl">@item.Name</a>
+                                </h5>
                                 <ul class="title-description">
                                     <li>
                                         <a asp-action="Index" asp-controller="Blogs" asp-area=""
@@ -65,7 +66,7 @@
                                     </li>
                                     <li>@item.CreateDate</li>
                                 </ul>
-                                <p  style="height: 35px; text-overflow: ellipsis; overflow: hidden; overflow-wrap: normal;">
+                                <p>
                                     @item.ShortDescription
                                 </p>
                             </div>
