@@ -31,12 +31,8 @@
                                         <input asp-for="ShortDescription" class="form-control" />
                                         <span asp-validation-for="ShortDescription" class="text-danger"></span>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <label asp-for="Description"></label>
-                                        <textarea asp-for="Description" class="form-control"></textarea>
-                                        <span asp-validation-for="Description" class="text-danger"></span>
+                                    <img id="imgPreview" src="@(PathTools.PathDefault)" class="img-fluid img-thumbnail" height="50" alt="" />
                                     </div>
-                                </div>
                                 <div class="col-xl-6 col-lg-6 col-md-12">
                                     <div class="form-group mb-3">
                                         <label asp-for="UniqeUrl"></label>
@@ -53,10 +49,16 @@
                                         <label asp-for="ImageFile" class="form-control-file"></label>
                                         <input asp-for="ImageFile" class="form-control-file text-white" />
                                         <span asp-validation-for="ImageFile" class="text-danger"></span>
-                                        <img id="imgsPreview" src="@(PathTools.PathDefault)" class="img-fluid img-thumbnail" height="50" alt="" />
+                                       
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
+                                    <div class="form-group mb-3">
+                                        <label  asp-for="Description"></label>
+                                        <textarea asp-for="Description" class="form-control"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+                                    </div>
+                                    <hr/>
                                     <input type="submit" value="Create" class="btn btn-primary btn-block text-uppercase" />
                                     <div asp-validation-summary="All" class="text-danger"></div>
                                 </div>
@@ -70,23 +72,18 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js"></script>
     <script>
-        $(document).ready(() => {
-            $("#ImageFile").change(function () {
-                const file = this.files[0];
-                console.log(file);
-                if (file) {
-                    let reader = new FileReader();
-                    reader.onload = function (event) {
-                        console.log(event.target.result);
-                        $("#imgsPreview").attr("src", event.target.result);
-                    }
-                    reader.readAsDataURL(file);
-                }
-            });
-        });
+        ClassicEditor
+            .create(document.querySelector( '#Description' ) )
+            .catch( error => {
+                console.error( error );
+            } );
     </script>
+
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
 
