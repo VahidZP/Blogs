@@ -46,7 +46,7 @@
                         <li>@Model.Comments Comments</li>
                         <li>@Model.CreateDate</li>
                     </ul>
-                    <p>@Model.Description</p>
+                    <p>@Html.Raw(Model.Description)</p>
 
                     <div class="comment-form">
                         <h5>Leave a Reply</h5>

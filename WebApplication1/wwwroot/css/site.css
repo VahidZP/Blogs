@@ -12,10 +12,10 @@ a {
     color: #0366d6;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+
+
+.ck-editor__editable_inline {
+    min-height: 500px;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
